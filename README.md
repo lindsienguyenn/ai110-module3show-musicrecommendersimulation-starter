@@ -17,18 +17,53 @@ Replace this paragraph with your own summary of what your version does.
 
 ## How The System Works
 
-Explain your design in plain language.
+This system recommends songs by scoring every song in the catalog
+against a user's preferences, then returning the top 5 matches.
 
-Some prompts to answer:
+Each `Song` in the system is described by four features:
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+- **Genre** — a category label (e.g. `"pop"`, `"jazz"`, `"rock"`)
+- **Mood** — an emotional label (e.g. `"happy"`, `"chill"`, `"sad"`)
+- **Energy** — a decimal value from `0.0` (very calm) to `1.0` (very intense)
+- **Tempo** — a number representing beats per minute (BPM), e.g. `120`
 
-You can include a simple diagram or bullet list if helpful.
+A `UserProfile` stores what the user enjoys:
 
+- Their **preferred genre** (e.g. `"pop"`)
+- Their **preferred mood** (e.g. `"happy"`)
+- Their **preferred energy level** (e.g. `0.7`)
+- Their **preferred tempo** (e.g. `128` BPM)
+
+The `Recommender` scores each song out of **100 points** using a
+weighted formula:
+
+| Feature        | Method                        | Weight |
+|----------------|-------------------------------|--------|
+| Genre match    | +1 if genre matches, else 0   | 40 pts |
+| Mood match     | +1 if mood matches, else 0    | 25 pts |
+| Energy         | `1 - abs(song - user)` × 20   | 20 pts |
+| Tempo          | `1 - abs(song - user) / 200` × 15 | 15 pts |
+
+**Total formula:**
+score = (genre_match × 40)
++ (mood_match  × 25)
++ (energy_proximity × 20)
++ (tempo_proximity  × 15)
+
+For numeric features (energy and tempo), the system rewards
+**closeness** to the user's preference — not just high or low values.
+A song with energy `0.75` scores higher than one with energy `0.3`
+for a user who prefers `0.7`.
+
+### Ranking Rule
+
+After every song is scored, the `Recommender` sorts all scores from
+highest to lowest and returns the **top 5 songs**.
+
+All songs → [Scoring Rule] → scored list → [Ranking Rule] → Top 5
+
+
+[Recommendation Output](terminal output.png)
 ---
 
 ## Getting Started
