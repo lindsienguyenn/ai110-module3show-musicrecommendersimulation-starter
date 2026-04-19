@@ -62,8 +62,9 @@ highest to lowest and returns the **top 5 songs**.
 
 All songs → [Scoring Rule] → scored list → [Ranking Rule] → Top 5
 
-Data Flow Charts:
-![Data Flow](/Users/thuylinhnguyen/Documents/GitHub/ai110-module3show-musicrecommendersimulation-starter/music_recommender_data_flow.svg)
+### Data Flow Charts:
+![Data Flow](music_recommender_data_flow.svg)
+
 Recommendation Output:
 ![Recommendation Output](terminal_output.png)
 ---
