@@ -63,7 +63,7 @@ highest to lowest and returns the **top 5 songs**.
 All songs → [Scoring Rule] → scored list → [Ranking Rule] → Top 5
 
 
-![Recommendation Output](terminal output.png)
+![Recommendation Output](terminal_output.png)
 ---
 
 ## Getting Started
